@@ -1,8 +1,6 @@
 # victormaricato.github.io
 
-Personal site, deployed to GitHub Pages.
-
-Live at https://victormaricato.github.io/ (custom domain `victormaricato.me` pending).
+Personal site, live at **https://victormaricato.me**.
 
 ## Stack
 
@@ -30,19 +28,4 @@ Pages under `src/pages/` consume those collections directly. To add a publicatio
 
 ## Deploy
 
-Push to `main` → `.github/workflows/deploy.yml` builds and publishes to GitHub Pages.
-
-## Custom domain
-
-When `victormaricato.me` is registered, re-add `public/CNAME` with that hostname,
-set DNS at the registrar, and configure the custom domain in Settings → Pages.
-
-DNS records (Namecheap → Advanced DNS):
-
-| Type  | Host  | Value                          |
-|-------|-------|--------------------------------|
-| A     | `@`   | `185.199.108.153`              |
-| A     | `@`   | `185.199.109.153`              |
-| A     | `@`   | `185.199.110.153`              |
-| A     | `@`   | `185.199.111.153`              |
-| CNAME | `www` | `victormaricato.github.io.`    |
+Push to `main` → `.github/workflows/deploy.yml` builds and publishes to GitHub Pages. Custom domain is wired via `public/CNAME`.
