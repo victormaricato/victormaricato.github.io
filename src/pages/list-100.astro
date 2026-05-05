@@ -1,6 +1,20 @@
 ---
 import Base from '../layouts/Base.astro';
 
+// Pull live read-count from Goodreads RSS at build time.
+let goodreadsCount: number | null = null;
+try {
+  const res = await fetch('https://www.goodreads.com/review/list_rss/193343086?shelf=read', {
+    headers: { 'User-Agent': 'Mozilla/5.0 (compatible; victormaricato.me build)' },
+  });
+  if (res.ok) {
+    const xml = await res.text();
+    goodreadsCount = (xml.match(/<item>/g) || []).length;
+  }
+} catch {
+  // Network unavailable during build — fall back to manual count.
+}
+
 type Status = 'done' | 'partial' | 'todo';
 type Item = { text: string; status: Status; note?: string };
 const items: Item[] = [
@@ -78,7 +92,7 @@ const items: Item[] = [
   { text: 'Take a road trip with no fixed schedule', status: 'todo' },
   { text: 'Sail or cruise through a beautiful archipelago', status: 'done' },
   { text: 'Visit at least one country on every inhabited continent', status: 'todo' },
-  { text: 'Have my mom communicate with one of my foreign friends', status: 'todo' },
+  { text: 'Have my mom communicate with one of my foreign friends', status: 'done' },
   { text: 'Skydive', status: 'todo' },
   { text: 'Visit a 2★+ Michelin restaurant in at least 2 countries per continent', status: 'todo' },
   { text: 'Attend a major sports final (Champions League, World Cup)', status: 'todo' },
@@ -92,8 +106,15 @@ const items: Item[] = [
   { text: 'Get a tattoo', status: 'todo' },
   { text: 'Say "no" and not feel guilty about it', status: 'todo' },
   { text: 'Visit Japan in cherry blossom season', status: 'todo' },
-  { text: 'Read 1,000 books over my lifetime', status: 'todo', note: 'running tally — to be wired up' },
-  { text: 'Watch 10 shows or movies that make me rethink my life', status: 'partial', note: '4/10 — Chernobyl, Interstellar, Coco, Breaking Bad' },
+  {
+    text: 'Read 1,000 books over my lifetime',
+    status: 'todo',
+    note: goodreadsCount !== null
+      ? `${goodreadsCount}/1,000 — tracked on <a href="https://www.goodreads.com/user/show/193343086-victor">Goodreads</a>`
+      : 'tracked on <a href="https://www.goodreads.com/user/show/193343086-victor">Goodreads</a>',
+  },
+  { text: 'Watch 10 shows or movies that make me rethink my life', status: 'partial', note: '4/10 — Chernobyl, Interstellar, Coco, Breaking Bad (<a href="https://letterboxd.com/victormaricato/">Letterboxd</a>)' },
+  { text: 'Play an instrument in a concert', status: 'todo' },
 ];
 
 // Fisher-Yates: order is reshuffled on every build
@@ -129,7 +150,7 @@ const sym = (s: Status) => s === 'done' ? '✓' : s === 'partial' ? '~' : '✗';
         <span class:list={['w-4 shrink-0 pt-0.5 font-mono', it.status === 'done' ? 'text-accent' : it.status === 'partial' ? 'text-muted' : 'text-muted/60']}>{sym(it.status)}</span>
         <span class:list={[it.status === 'done' ? '' : 'text-ink dark:text-white']}>
           {it.text}
-          {it.note && <span class="text-muted text-sm"> &mdash; {it.note}</span>}
+          {it.note && <span class="text-muted text-sm" set:html={` &mdash; ${it.note}`} />}
         </span>
       </li>
     ))}

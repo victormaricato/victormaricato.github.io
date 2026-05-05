@@ -17,7 +17,7 @@ const pubs = (await getCollection('publications')).sort((a, b) => b.data.year - 
             {p.data.url ? <a href={p.data.url}>{p.data.title}</a> : p.data.title}
           </div>
           <div class="text-sm">{p.data.authors}</div>
-          <div class="text-sm text-muted">{p.data.venue}, {p.data.year}{p.data.citations ? ` · cited by ${p.data.citations}` : ''}{p.data.pdf ? ' · ' : ''}{p.data.pdf && <a href={p.data.pdf}>pdf</a>}</div>
+          <div class="text-sm text-muted">{p.data.venue}, {p.data.year}{p.data.pdf ? ' · ' : ''}{p.data.pdf && <a href={p.data.pdf}>pdf</a>}</div>
           <div class="text-[0.97rem] mt-1"><Content /></div>
         </li>
       );
