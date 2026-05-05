@@ -93,6 +93,13 @@ const items: Item[] = [
   { text: 'Say "no" and not feel guilty about it', status: 'todo' },
 ];
 
+// Fisher-Yates: order is reshuffled on every build
+const shuffled = [...items];
+for (let i = shuffled.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+}
+
 const score = items.reduce((s, i) => s + (i.status === 'done' ? 1 : i.status === 'partial' ? 0.5 : 0), 0);
 const total = items.length;
 const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -113,7 +120,7 @@ const sym = (s: Status) => s === 'done' ? '✓' : s === 'partial' ? '~' : '✗';
   </p>
 
   <ol class="list-none pl-0 mt-6 space-y-1.5 text-[1rem]">
-    {items.map((it, idx) => (
+    {shuffled.map((it, idx) => (
       <li class="flex gap-3">
         <span class="text-muted text-sm w-6 shrink-0 text-right pt-0.5 tabular-nums">{idx + 1}.</span>
         <span class:list={['w-4 shrink-0 pt-0.5 font-mono', it.status === 'done' ? 'text-accent' : it.status === 'partial' ? 'text-muted' : 'text-muted/60']}>{sym(it.status)}</span>
