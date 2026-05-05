@@ -1,36 +1,48 @@
-# victormaricato.me
+# victormaricato.github.io
 
-Personal website. Astro + Tailwind, deployed to GitHub Pages.
+Personal site, deployed to GitHub Pages.
+
+Live at https://victormaricato.github.io/ (custom domain `victormaricato.me` pending).
+
+## Stack
+
+Astro + Tailwind. Static export. No JS at runtime.
 
 ## Develop
 
 ```bash
 npm install
 npm run dev      # http://localhost:4321
-npm run build
-npm run preview
+npm run build    # → dist/
+npm run preview  # serve dist/
 ```
 
 ## Content
 
-Markdown collections under `src/content/`:
+Markdown lives under `src/content/`, typed by `src/content/config.ts`:
 
-- `publications/` — papers (Scholar mirrors)
-- `experience/` — CV timeline (`order` field controls position; lower = newer)
+- `publications/` — papers
+- `experience/` — CV entries (`order` controls position; lower = newer)
 - `projects/` — side projects
 - `talks/` — talks and media
-- `blog/` — MDX posts (set `draft: true` to hide)
-- `gallery/` — photo albums (deferred / not yet rendered)
+
+Pages under `src/pages/` consume those collections directly. To add a publication, drop a markdown file with the right frontmatter.
 
 ## Deploy
 
-`main` branch auto-deploys via GitHub Actions to GitHub Pages.
-Custom domain `victormaricato.me` is configured via `public/CNAME`.
+Push to `main` → `.github/workflows/deploy.yml` builds and publishes to GitHub Pages.
 
-## Domain (one-time)
+## Custom domain
 
-1. Claim Namecheap free `.me` from GitHub Student Pack.
-2. In Namecheap → Advanced DNS, set 4 A records to GitHub Pages IPs:
-   `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`.
-3. Add CNAME `www` → `victormaricato.github.io`.
-4. In repo Settings → Pages, set custom domain to `victormaricato.me` and enforce HTTPS.
+When `victormaricato.me` is registered, re-add `public/CNAME` with that hostname,
+set DNS at the registrar, and configure the custom domain in Settings → Pages.
+
+DNS records (Namecheap → Advanced DNS):
+
+| Type  | Host  | Value                          |
+|-------|-------|--------------------------------|
+| A     | `@`   | `185.199.108.153`              |
+| A     | `@`   | `185.199.109.153`              |
+| A     | `@`   | `185.199.110.153`              |
+| A     | `@`   | `185.199.111.153`              |
+| CNAME | `www` | `victormaricato.github.io.`    |

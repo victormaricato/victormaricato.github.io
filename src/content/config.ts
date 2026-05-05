@@ -48,25 +48,4 @@ const talks = defineCollection({
   }),
 });
 
-const blog = defineCollection({
-  type: 'content',
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    date: z.coerce.date(),
-    draft: z.boolean().default(false),
-    tags: z.array(z.string()).default([]),
-  }),
-});
-
-const gallery = defineCollection({
-  type: 'content',
-  schema: z.object({
-    album: z.string(),
-    date: z.string(),
-    location: z.string().optional(),
-    photos: z.array(z.object({ src: z.string(), caption: z.string().optional() })),
-  }),
-});
-
-export const collections = { publications, experience, projects, talks, blog, gallery };
+export const collections = { publications, experience, projects, talks };
