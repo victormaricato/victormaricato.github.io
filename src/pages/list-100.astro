@@ -85,6 +85,13 @@ const items: Item[] = [
   { text: 'Attend a major sports final (Champions League, World Cup)', status: 'todo' },
   { text: 'Watch a Formula 1 race in person', status: 'todo' },
   { text: 'Rank top 10+ in competitive gaming', status: 'done', note: 'top-3 Syndra on the BR League of Legends server' },
+  { text: 'Study Medicine', status: 'partial', note: 'started, didn\'t finish' },
+  { text: 'Study machine learning at graduate level', status: 'done' },
+  { text: 'Contribute to Alzheimer\'s disease research', status: 'todo' },
+  { text: 'Find a cure for a disease or condition', status: 'todo' },
+  { text: 'Learn how to make scientific illustrations', status: 'todo' },
+  { text: 'Get a tattoo', status: 'todo' },
+  { text: 'Say "no" and not feel guilty about it', status: 'todo' },
 ];
 
 const score = items.reduce((s, i) => s + (i.status === 'done' ? 1 : i.status === 'partial' ? 0.5 : 0), 0);
