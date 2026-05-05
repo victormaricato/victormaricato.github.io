@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const exp = (await getCollection('experience')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="CV — Victor Maricato">
+  <h1>CV</h1>
+  <p class="text-sm text-muted">
+    Also as <a href="https://github.com/victormaricato/resume/blob/main/outputs/resume.pdf">PDF (LaTeX)</a>
+    · source on <a href="https://github.com/victormaricato/resume">GitHub</a>.
+  </p>
+
+  <h2>Experience</h2>
+  <ul class="list-none pl-0 space-y-5">
+    {exp.map(async (e) => {
+      const { Content } = await e.render();
+      return (
+        <li>
+          <div class="flex flex-wrap items-baseline gap-x-3">
+            <strong>{e.data.role}</strong>
+            <span class="text-muted">·</span>
+            {e.data.url
+              ? <a href={e.data.url}>{e.data.company}</a>
+              : <span>{e.data.company}</span>}
+            <span class="text-sm text-muted ml-auto">{e.data.start} – {e.data.end ?? 'present'}</span>
+          </div>
+          <div class="mt-1 text-[0.97rem]"><Content /></div>
+        </li>
+      );
+    })}
+  </ul>
+
+  <h2>Education</h2>
+  <ul class="list-none pl-0 space-y-3">
+    <li>
+      <strong>MSc, Health Informatics</strong> · <a href="https://ki.se/">Karolinska Institutet</a>
+      <span class="block text-sm text-muted">2026 – present</span>
+    </li>
+    <li>
+      <strong>BSc, Computer Science (Artificial Intelligence)</strong> · Heriot-Watt University
+    </li>
+    <li>
+      <strong>BSc, Information Systems</strong> · UNIRIO (Universidade Federal do Estado do Rio de Janeiro)
+      <span class="block text-sm text-muted">2019 – 2024</span>
+    </li>
+    <li>
+      <strong>Medicine</strong> — formally studied before moving fully into machine learning; kept as a serious intellectual interest in biomedical AI and diagnostics.
+    </li>
+  </ul>
+
+  <h2>Selected skills</h2>
+  <p class="text-[0.97rem]">
+    LLM fine-tuning · function calling · RAG · graph neural networks · protein language models ·
+    Python · PyTorch · AWS SageMaker · Snowflake · LangChain / LlamaIndex · Weights &amp; Biases.
+  </p>
+</Base>

@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const items = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Projects — Victor Maricato">
+  <h1>Projects</h1>
+  <p>Side projects I keep alive. Around 1k users in total, no ads.</p>
+  <ul class="list-none pl-0 space-y-5 mt-6">
+    {items.map(async (p) => {
+      const { Content } = await p.render();
+      return (
+        <li>
+          <div class="flex items-baseline gap-3">
+            <a href={p.data.url} class="font-medium">{p.data.name}</a>
+            <span class="text-xs text-muted uppercase tracking-wide">{p.data.status}</span>
+          </div>
+          <div class="text-[0.97rem] mt-1">{p.data.blurb}</div>
+          <div class="text-[0.97rem] mt-1"><Content /></div>
+        </li>
+      );
+    })}
+  </ul>
+</Base>

@@ -1,0 +1,12 @@
+---
+const links = [
+  { href: 'https://github.com/victormaricato', label: 'GitHub' },
+  { href: 'https://www.linkedin.com/in/victormaricato/', label: 'LinkedIn' },
+  { href: 'https://x.com/coffeeshopperr', label: 'Twitter' },
+  { href: 'https://scholar.google.com/citations?user=WaAoUqsAAAAJ&hl=en', label: 'Scholar' },
+  
+];
+---
+<footer class="mt-20 pt-8 border-t border-neutral-200 dark:border-neutral-800 text-sm text-muted flex flex-wrap gap-x-5 gap-y-2">
+  {links.map((l) => <a href={l.href} class="no-underline hover:underline">{l.label}</a>)}
+</footer>

@@ -1,0 +1,120 @@
+---
+import Base from '../layouts/Base.astro';
+
+type Status = 'done' | 'partial' | 'todo';
+type Item = { text: string; status: Status; note?: string };
+const items: Item[] = [
+  { text: 'Do a +5h hike', status: 'done' },
+  { text: 'Spend +6 months in another country', status: 'done' },
+  { text: 'Visit Korea', status: 'done' },
+  { text: 'Go to a Blackpink concert', status: 'done', note: 'went to two' },
+  { text: 'Meet someone from Blackpink in person', status: 'todo' },
+  { text: 'Learn piano', status: 'done' },
+  { text: 'Win a karting tournament', status: 'todo' },
+  { text: 'Play volleyball at the beach', status: 'todo' },
+  { text: 'Take my mom on an international trip', status: 'todo', note: 'tbd' },
+  { text: 'Cook the favorite meal of my loved ones', status: 'partial', note: '1/5 — and my dog\'s favorite is uncomputable: every food tested returns extremely positive' },
+  { text: 'See an aurora', status: 'partial' },
+  { text: 'Skiing', status: 'todo' },
+  { text: 'Sleep at the beach', status: 'done' },
+  { text: 'Road-trip with friends', status: 'done' },
+  { text: 'Travel with my international friends', status: 'todo' },
+  { text: 'Learn how to make a perfect latte', status: 'todo' },
+  { text: 'Cook coxinha for someone not from Brazil', status: 'todo' },
+  { text: 'Visit at least half of Brazilian states', status: 'partial', note: '5/27' },
+  { text: 'Get a PhD', status: 'todo' },
+  { text: 'Finish Medicine', status: 'todo' },
+  { text: 'Save a life', status: 'done' },
+  { text: 'Take my friends abroad', status: 'todo' },
+  { text: 'Cry of happiness', status: 'done' },
+  { text: 'Publish at a top-1 conference', status: 'todo' },
+  { text: 'Publish at a top-3 conference', status: 'todo' },
+  { text: 'Publish at a top-5 conference', status: 'done' },
+  { text: 'Make my mom understand my research', status: 'partial', note: 'getting close' },
+  { text: 'Go to a 3-star Michelin restaurant', status: 'todo' },
+  { text: 'Fly an airplane', status: 'todo' },
+  { text: 'Surf', status: 'todo' },
+  { text: 'Scuba dive', status: 'todo' },
+  { text: 'Volunteer', status: 'todo' },
+  { text: 'Camp', status: 'todo' },
+  { text: 'Learn to dance', status: 'todo', note: 'tried once, failed' },
+  { text: 'Visit 100 countries', status: 'partial', note: '~16%' },
+  { text: 'Eat pasta in Italy', status: 'todo' },
+  { text: 'Eat sushi in Japan', status: 'todo' },
+  { text: 'Eat phở in Vietnam', status: 'todo' },
+  { text: 'Eat a croissant in Paris', status: 'done' },
+  { text: 'Write a blog post in a café during the rain', status: 'todo' },
+  { text: 'Teach biochemistry or bioinformatics at my old high school', status: 'todo' },
+  { text: 'Start a startup earning +1k USD / month', status: 'todo' },
+  { text: 'Start a startup earning +10k USD / month', status: 'todo' },
+  { text: 'Drive a sports car on the Autobahn', status: 'done' },
+  { text: 'Learn to sing', status: 'todo' },
+  { text: 'Read 5 books in a year', status: 'todo' },
+  { text: 'See the 7 World Wonders', status: 'partial', note: '2/7' },
+  { text: 'Watch the sunset in Rio', status: 'done' },
+  { text: 'Visit Machu Picchu', status: 'todo' },
+  { text: 'Go to Mexico during Día de los Muertos', status: 'todo' },
+  { text: 'Go to the US during Halloween', status: 'done' },
+  { text: 'Throw snow at my brother', status: 'done' },
+  { text: 'Go on a hike with my dog', status: 'todo' },
+  { text: 'Let my dog off-leash at a deserted beach', status: 'todo' },
+  { text: 'Ice-skate outdoors', status: 'todo' },
+  { text: 'Watch a movie in an open-air cinema', status: 'todo' },
+  { text: 'Take a cooking class in another country', status: 'done' },
+  { text: 'Take a cooking class in Asia', status: 'todo' },
+  { text: 'Play piano in public', status: 'done' },
+  { text: 'Solo trip', status: 'done' },
+  { text: 'Family trip with my brother and mom', status: 'todo' },
+  { text: 'Family trip with friends (my kids + theirs, eventually)', status: 'todo' },
+  { text: 'Practice some physical activity 3× a week for a full year', status: 'todo' },
+  { text: 'Learn Chinese', status: 'todo' },
+  { text: 'Learn Korean', status: 'todo' },
+  { text: 'Learn German', status: 'done' },
+  { text: 'Go on a cruise', status: 'done' },
+  { text: 'Go on a cruise abroad', status: 'todo' },
+  { text: 'Take care of a plant', status: 'todo' },
+  { text: 'Practice shooting at a firing range', status: 'todo' },
+  { text: 'Spend a full month without internet or phone', status: 'todo' },
+  { text: 'Understand why opposite charges attract and equal ones repel', status: 'todo' },
+  { text: 'Take a road trip with no fixed schedule', status: 'todo' },
+  { text: 'Sail or cruise through a beautiful archipelago', status: 'done' },
+  { text: 'Visit at least one country on every inhabited continent', status: 'todo' },
+  { text: 'Have my mom communicate with one of my foreign friends', status: 'todo' },
+  { text: 'Skydive', status: 'todo' },
+  { text: 'Visit a 2★+ Michelin restaurant in at least 2 countries per continent', status: 'todo' },
+  { text: 'Attend a major sports final (Champions League, World Cup)', status: 'todo' },
+  { text: 'Watch a Formula 1 race in person', status: 'todo' },
+];
+
+const score = items.reduce((s, i) => s + (i.status === 'done' ? 1 : i.status === 'partial' ? 0.5 : 0), 0);
+const total = items.length;
+const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const sym = (s: Status) => s === 'done' ? '✓' : s === 'partial' ? '~' : '✗';
+---
+<Base title="List 100 — Victor Maricato" description="Things I want to do before I die.">
+  <h1>List 100</h1>
+  <p>
+    Things I want to do before I die. {total} so far &mdash; the goal is 100, but I'd
+    rather grow the list deliberately than pad it. Recommendations welcome at
+    maricatovictor [at] gmail.com.
+  </p>
+  <p class="text-sm text-muted">
+    Inspired by <a href="https://huyenchip.com/list-100/">Chip Huyen's List 100</a>.
+  </p>
+  <p class="text-sm text-muted">
+    Progress as of {today}: <strong>{score}</strong>/{total}. <span aria-hidden="true">✓</span> done · <span aria-hidden="true">~</span> partial · <span aria-hidden="true">✗</span> still ahead of me.
+  </p>
+
+  <ol class="list-none pl-0 mt-6 space-y-1.5 text-[1rem]">
+    {items.map((it, idx) => (
+      <li class="flex gap-3">
+        <span class="text-muted text-sm w-6 shrink-0 text-right pt-0.5 tabular-nums">{idx + 1}.</span>
+        <span class:list={['w-4 shrink-0 pt-0.5 font-mono', it.status === 'done' ? 'text-accent' : it.status === 'partial' ? 'text-muted' : 'text-muted/60']}>{sym(it.status)}</span>
+        <span class:list={[it.status === 'done' ? '' : 'text-ink dark:text-white']}>
+          {it.text}
+          {it.note && <span class="text-muted text-sm"> &mdash; {it.note}</span>}
+        </span>
+      </li>
+    ))}
+  </ol>
+</Base>

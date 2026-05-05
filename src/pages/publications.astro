@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const pubs = (await getCollection('publications')).sort((a, b) => b.data.year - a.data.year);
+---
+<Base title="Publications — Victor Maricato">
+  <h1>Publications</h1>
+  <p class="text-muted text-sm">
+    Up-to-date list on <a href="https://scholar.google.com/citations?user=WaAoUqsAAAAJ&hl=en">Google Scholar</a>.
+  </p>
+  <ul class="list-none pl-0 space-y-5 mt-6">
+    {pubs.map(async (p) => {
+      const { Content } = await p.render();
+      return (
+        <li>
+          <div class="font-medium">
+            {p.data.url ? <a href={p.data.url}>{p.data.title}</a> : p.data.title}
+          </div>
+          <div class="text-sm">{p.data.authors}</div>
+          <div class="text-sm text-muted">{p.data.venue}, {p.data.year}{p.data.citations ? ` · cited by ${p.data.citations}` : ''}{p.data.pdf ? ' · ' : ''}{p.data.pdf && <a href={p.data.pdf}>pdf</a>}</div>
+          <div class="text-[0.97rem] mt-1"><Content /></div>
+        </li>
+      );
+    })}
+  </ul>
+</Base>

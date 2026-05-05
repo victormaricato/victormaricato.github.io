@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro';
+
+const news = [
+  { date: 'Nov 2025', text: 'Paper accepted at EMNLP 2025 (Industry Track): DispatchQA — a benchmark for small function-calling LMs in e-commerce.', url: 'https://aclanthology.org/2025.emnlp-industry.154/' },
+  { date: 'Sep 2025', text: 'Started MSc in Health Informatics at Karolinska Institutet.' },
+  { date: 'Apr 2025', text: 'Promoted to Staff Machine Learning Engineer at Upwork.' },
+];
+---
+<Base>
+  <header class="flex flex-col md:flex-row md:items-start gap-6 md:gap-8 mb-10">
+    <img
+      src="/images/profile.jpg"
+      alt="Victor Maricato"
+      width="160"
+      height="160"
+      class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover shrink-0"
+    />
+    <div>
+      <h1 class="!mt-0">Victor Maricato</h1>
+      <p class="text-muted text-base !mt-1">Senior Machine Learning Engineer.<br />Stockholm, Sweden.</p>
+    </div>
+  </header>
+
+  <section class="space-y-4 text-[1.05rem]">
+    <p>
+      I'm a Staff Machine Learning Engineer at <a href="https://www.upwork.com/uma">Upwork</a>,
+      working on Uma — Upwork's mindful AI — under the Algorithms & Research team. My focus is
+      fine-tuning small language models for function calling and search-query understanding under tight
+      latency budgets.
+    </p>
+    <p>
+      Before Upwork I was a research assistant at <a href="https://www.csail.mit.edu/">MIT CSAIL</a>
+      working on protein language models, a genomics data scientist at
+      <a href="https://www.mendelics.com/">Mendelics</a> (where a variant prediction model I built ended up
+      in Brazil's national newborn screening program), and a data scientist at OLX and Shell.
+    </p>
+    <p>
+      I formally studied <strong>Medicine</strong> before moving fully into machine learning, and I've
+      kept medical sciences as a serious intellectual interest. That background still shapes how I
+      think about biomedical AI, diagnostics, and useful health systems. I'm currently pursuing an
+      MSc in Health Informatics at <a href="https://ki.se/">Karolinska Institutet</a> to keep those
+      two tracks talking to each other.
+    </p>
+    <p>
+      I build side projects: <a href="https://focusy.co">focusy.co</a>,
+      <a href="https://enhancv.me"> enhancv.me</a>, <a href="https://kannel.ai">kannel.ai</a>, and
+      <a href="https://adhd-screening.org">adhd-screening.org</a>. Around 1k users, no ads.
+    </p>
+    <p>
+      For the medical thread of all this — the questions I keep coming back to in biomedical AI,
+      diagnostics, and how health systems actually work — there's a separate <a href="/med">/med</a> page.
+    </p>
+    <p class="flex items-center gap-4 !mt-6">
+      <img src="/images/toia/portrait.jpg" alt="Toia, my dog"
+           width="72" height="72"
+           class="w-16 h-16 rounded-full object-cover shrink-0" />
+      <span class="text-[0.97rem]">
+        Tax for reading this far: meet <strong>Maria "Toia" Aleatória</strong> (Random Mary) — my dog,
+        chief debugging companion, and head of morale.
+      </span>
+    </p>
+    <p>
+      Reach out at maricatovictor [at] gmail.com.
+      My CV is also available as a <a href="https://github.com/victormaricato/resume/blob/main/outputs/resume.pdf">PDF</a>
+      (LaTeX source <a href="https://github.com/victormaricato/resume">here</a>).
+    </p>
+  </section>
+
+  <section>
+    <h2>News</h2>
+    <ul class="list-none pl-0 space-y-2">
+      {news.map((n) => (
+        <li class="flex gap-4">
+          <span class="text-muted text-sm w-24 shrink-0 pt-0.5">{n.date}</span>
+          <span>
+            {n.text}
+            {n.url && <> <a href={n.url}>link</a></>}
+          </span>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
