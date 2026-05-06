@@ -9,6 +9,27 @@ interface Props {
 }
 const { title = 'Victor Maricato', description = 'Senior Machine Learning Engineer. ML, health informatics, and medicine.' } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Victor Maricato',
+  url: 'https://victormaricato.me/',
+  image: 'https://victormaricato.me/images/profile.jpg',
+  jobTitle: 'Staff Machine Learning Engineer',
+  worksFor: { '@type': 'Organization', name: 'Upwork' },
+  alumniOf: [
+    { '@type': 'CollegeOrUniversity', name: 'Karolinska Institutet' },
+    { '@type': 'CollegeOrUniversity', name: 'MIT CSAIL' },
+  ],
+  address: { '@type': 'PostalAddress', addressLocality: 'Stockholm', addressCountry: 'SE' },
+  sameAs: [
+    'https://github.com/victormaricato',
+    'https://www.linkedin.com/in/victormaricato/',
+    'https://x.com/coffeeshopperr',
+    'https://scholar.google.com/citations?user=WaAoUqsAAAAJ&hl=en',
+  ],
+};
 ---
 <!doctype html>
 <html lang="en">
@@ -27,6 +48,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary" />
+    {isHome && (
+      <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
+    )}
   </head>
   <body class="font-sans">
     <main class="max-w-prose mx-auto px-5 py-10 md:py-16">
